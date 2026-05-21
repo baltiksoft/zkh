@@ -45,5 +45,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(UserDetailSeeder::class);
+        $this->call(MeterSeeder::class);
+        $this->call(UnitSeeder::class);
+        $this->call(TariffSeeder::class);
+        $this->call(InvoiceSeeder::class);
+        $this->call(PaymentSeeder::class);
     }
 }

@@ -13,19 +13,20 @@ return new class extends Migration
 
             // Связь с помещением
             $table->foreignId('room_id')
-                ->comment('Идентификатор арендуемого помещения')
+                ->comment('Код арендуемого помещения')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
             $table->foreignId('userdetail_id')
-                ->comment('Идентификатор арендатора')
+                ->comment('Код арендатора')
                 ->constrained('user_detail') // Явно указываем целевую таблицу
                 ->onDelete('cascade');
 
             // Временные рамки
             $table->date('start_date')->comment('Дата начала аренды');
             $table->date('end_date')->comment('Дата окончания аренды (планируемая)');
+            $table->decimal('balance', 8, 2)->default(0.00)->comment('Баланс средств');
 
             // Условия договора
             $table->boolean('is_renewable')->default(false)->comment('Признак автоматической пролонгации договора');

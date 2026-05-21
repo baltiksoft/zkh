@@ -25,7 +25,7 @@ it('Авторизация пользователя через компонен�
 
     $this->assertNotNull($this->app['request']->session());
 
-    Livewire::test('pages::users.login')
+    Livewire::test('pages::login')
         ->set('email', 'testuser@test.ru')
         ->set('password', 'password')
         ->call('login')

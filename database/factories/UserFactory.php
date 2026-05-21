@@ -26,9 +26,9 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'country_id' => Country::inRandomOrder()->first(),
+           // 'country_id' => Country::inRandomOrder()->first(),
             'name' => fake()->name(),
-            'bio' => fake()->paragraph(),
+            //'bio' => fake()->paragraph(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

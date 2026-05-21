@@ -1,10 +1,23 @@
 <?php
 
+use App\Models\Payment;
 use Livewire\Component;
 
-new class extends Component
-{
-    //
+new class extends Component {
+    public $payment;
+    public $remainingPaymentAmount = 0;
+    public $usedAmount = 0;
+
+    public function mount()
+    {
+        $this->payment = Payment::with('invoices')->findOrFail(1);
+
+        // Считаем, сколько из этого платежа уже ушло на счета
+        $this->usedAmount = $this->payment->invoices->sum('pivot.amount');
+
+        // Вычисляем свободный остаток конкретно этого платежа
+        $this->remainingPaymentAmount = $this->payment->amount - $this->usedAmount;
+    }
 };
 ?>
 
@@ -15,18 +28,18 @@ new class extends Component
             title="Фамилия Имя Отчество"
             value="{{ Auth::user()->userDetail ? Auth::user()->userDetail->short_name : Auth::user()->name }}"
             icon="o-user"
-            color="text-primary" />
+            color="text-primary"/>
         <x-stat
             title="Паспорт"
             value="{{ Auth::user()->userDetail ? Auth::user()->userDetail->masked_series : '' }}"
             icon="o-document"
-            color="text-primary" />
+            color="text-primary"/>
 
         <x-stat
             title="Вам"
             value="{{ Auth::user()->userDetail->age_with_suffix }}"
             icon="o-calendar"
-            color="text-primary" />
+            color="text-primary"/>
     </div>
 
     @if(count(Auth::user()->userDetail?->rooms ?? []) > 0)
@@ -50,7 +63,7 @@ new class extends Component
                             <h3 class="text-xl font-bold text-base-content mb-1">
                                 {{ $room->name }}
                             </h3>
-                            <x-badge value="Активно" class="badge-success text-white badge-sm" />
+                            <x-badge value="Активно" class="badge-success text-white badge-sm"/>
 
                             <!-- Описание / Адрес -->
                             <p class="text-base-content/80 text-sm leading-relaxed">
@@ -60,8 +73,8 @@ new class extends Component
 
                         <!-- Нижняя панель с кнопками или статусом (опционально) -->
                         <div class="mt-6 flex justify-end gap-2">
-                            <x-button label="Подробнее" icon="o-eye" size="sm" class="btn-ghost" />
-                            <x-button label="Редактировать" icon="o-pencil" size="sm" class="btn-primary" />
+                            <x-button label="Подробнее" icon="o-eye" size="sm" class="btn-ghost"/>
+                            <x-button label="Редактировать" icon="o-pencil" size="sm" class="btn-primary"/>
                         </div>
                     </div>
                 </div>
@@ -71,4 +84,11 @@ new class extends Component
             <p class="text-gray-500">Список помещений пуст.</p>
         @endforelse
     @endif
+
+    <h2>Платёж на сумму {{ $payment->amount }}</h2>
+    @foreach ($payment->invoices as $invoice)
+        <div>Этот платеж погасил {{$invoice->pivot->amount}} руб. по счету №{{$invoice->id}}</div>
+    @endforeach
+    <h2>Израсходовано: {{ $usedAmount }}</h2>
+    <h2>Осталось на счету: {{ $remainingPaymentAmount }}</h2>
 </div>

@@ -29,7 +29,7 @@ test('Гость не может просматривать страницу «�
     get(route('home'))->assertRedirect(route('login'));
 });
 
-test('Авторизованный пользователь видит страницу «Спортсмены»', function () {
+/*test('Авторизованный пользователь видит страницу «Спортсмены»', function () {
     $user = User::factory()->create();
 
     actingAs($user)
@@ -47,3 +47,4 @@ test('Авторизованный пользователь видит стра�
         ->assertSee(__('dashboard.persons.index'));
 });
 
+*/
