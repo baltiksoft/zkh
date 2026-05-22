@@ -73,7 +73,7 @@ new class extends Component {
 
                         <!-- Нижняя панель с кнопками или статусом (опционально) -->
                         <div class="mt-6 flex justify-end gap-2">
-                            <x-button label="Подробнее" icon="o-eye" size="sm" class="btn-ghost"/>
+                            <x-button label="Подробнее" icon="o-eye" size="sm" class="btn-ghost" :link="route('room.show', $room->id)" />
                             <x-button label="Редактировать" icon="o-pencil" size="sm" class="btn-primary"/>
                         </div>
                     </div>

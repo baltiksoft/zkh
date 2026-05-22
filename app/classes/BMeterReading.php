@@ -6,7 +6,7 @@ use App\Models\MeterReading;
 
 class BMeterReading
 {
-    public function saveMeters($data)
+    public static function saveMeters($data)
     {
         $reading = MeterReading::create($data);
 

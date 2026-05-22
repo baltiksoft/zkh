@@ -10,6 +10,7 @@ class BInvoiceService
 {
     public function generateInvoice(MeterReading $reading): Invoice
     {
+        dd($reading->meter->meter_id);
         // Ищем актуальный тариф для типа счетчика на момент подачи показаний
         $tariff = Tariff::where('meter_id', $reading->meter->meter_id)
             ->where('active_from', '<=', $reading->reported_at)

@@ -17,6 +17,7 @@ Route::get('/logout', function () {
 Route::middleware('auth')->prefix("/home")->group(function () {
     Route::livewire('/', 'pages::home')->name('home');
     Route::livewire('/profile', 'pages::users.profile')->name('user.profile');
+    Route::livewire('/room/{room}/show', 'pages::room.show')->name('room.show');
 
     //Route::livewire('/', 'pages::index');
     //Route::livewire('/users', 'pages::users.index');
